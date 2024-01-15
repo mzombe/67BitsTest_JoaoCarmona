@@ -8,7 +8,7 @@ public class NPC : MonoBehaviour
     [SerializeField] private RagDollActive activeRagDoll;
     [SerializeField] private bool isRagDoll;
     [SerializeField] private CollectNPC collectNPC;
-    
+    private NPCSpawner _spawner;
     private void Update() {
         if(!isRagDoll)
             return;
@@ -22,9 +22,12 @@ public class NPC : MonoBehaviour
             activeRagDoll.ActiveRagDoll();
             activeRagDoll.ImpulseRagDoll(other.contacts[0].point);
             collectNPC.enabled = true;
+            _spawner.RemoveNPC(gameObject);
             this.enabled = false;
         }
     }
-
+    public void SetNpcSpawner(NPCSpawner spawner){
+        _spawner = spawner;
+    }
 
 }

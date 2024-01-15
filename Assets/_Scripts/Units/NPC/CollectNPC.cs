@@ -20,8 +20,8 @@ public class CollectNPC : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.layer == 3 && canColect && CarryManager.Instance.Cancollect()){
-            CarryManager.Instance.AddOneNPC();
+        if(other.gameObject.layer == 3 && canColect && CarryController.Instance.Cancollect()){
+            CarryController.Instance.AddNPC(1);
             Destroy(gameObject.transform.parent.transform.parent.gameObject);
         }
     }

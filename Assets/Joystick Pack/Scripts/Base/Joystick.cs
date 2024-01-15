@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
-    public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
-    public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
+    public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } set { value = Horizontal; } }
+    public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } set { value = Vertical; } }
+    public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } set { value = Direction; } }
 
     public float HandleRange
     {
@@ -24,12 +24,18 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public AxisOptions AxisOptions { get { return AxisOptions; } set { axisOptions = value; } }
     public bool SnapX { get { return snapX; } set { snapX = value; } }
     public bool SnapY { get { return snapY; } set { snapY = value; } }
+    public bool Pressed { get { return pressed; } set { pressed = value; } }
+    public bool Holding { get { return holding; } set { holding = value; } }
+    public float TimeToWaitHolding { get { return timeToWaitHolding; } set { timeToWaitHolding = value; } }
 
     [SerializeField] private float handleRange = 1;
     [SerializeField] private float deadZone = 0;
+    [SerializeField] private float timeToWaitHolding = 0.5f;
     [SerializeField] private AxisOptions axisOptions = AxisOptions.Both;
     [SerializeField] private bool snapX = false;
     [SerializeField] private bool snapY = false;
+    [SerializeField] private bool pressed = false;
+    [SerializeField] private bool holding = false;
 
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
@@ -60,10 +66,15 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        pressed = true;
+        CancelInvoke("IsHolding");
+        holding = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        CancelInvoke("IsHolding");
+        holding = false;
         cam = null;
         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
             cam = canvas.worldCamera;
@@ -74,6 +85,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
         handle.anchoredPosition = input * radius * handleRange;
+    }
+
+    private void Update()
+    {
+        if (!holding) Invoke("IsHolding", timeToWaitHolding);
+    }
+
+    void IsHolding()
+    {
+        holding = true;
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
@@ -133,6 +154,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     {
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
+        pressed = false;
+        CancelInvoke("IsHolding");
+        holding = false;
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
@@ -145,6 +169,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         return Vector2.zero;
     }
+
+    private void OnDisable()
+    {
+        input = Vector2.zero;
+        handle.anchoredPosition = Vector2.zero;
+        pressed = false;
+        CancelInvoke("IsHolding");
+        holding = false;
+    }
+
 }
 
 public enum AxisOptions { Both, Horizontal, Vertical }

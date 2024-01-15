@@ -1,0 +1,5 @@
+C:/Users/Carmona/Desktop/GitShared/67BitsTest_JoaoCarmona/.utmp/RelWithDebInfo/132303h7/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Carmona/Desktop/GitShared/67BitsTest_JoaoCarmona/.utmp/RelWithDebInfo/132303h7/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+C:/Users/Carmona/Desktop/GitShared/67BitsTest_JoaoCarmona/.utmp/RelWithDebInfo/132303h7/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+C:/Users/Carmona/Desktop/GitShared/67BitsTest_JoaoCarmona/.utmp/RelWithDebInfo/132303h7/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+C:/Users/Carmona/Desktop/GitShared/67BitsTest_JoaoCarmona/.utmp/RelWithDebInfo/132303h7/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir
