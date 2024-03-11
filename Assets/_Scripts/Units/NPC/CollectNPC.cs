@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CollectNPC : MonoBehaviour
 {
+    [SerializeField] private GameEvent _onCollectNpc;
     private SphereCollider col;
     private bool canColect;
     private void Awake() {
@@ -23,7 +24,9 @@ public class CollectNPC : MonoBehaviour
         if(other.gameObject.layer == 3 && canColect && CarryController.Instance.Cancollect()){
             CarryController.Instance.AddNPC(1);
             Destroy(gameObject.transform.parent.transform.parent.gameObject);
+            _onCollectNpc.Invoke();
         }
+
     }
 
     

@@ -97,9 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897a1211c1e0cbb4cac33a0ac7a50b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitBoxLayer:
-    serializedVersion: 2
-    m_Bits: 1024
   punchEvent: {fileID: 11400000, guid: eb628f09653804947b7f58a2ec37a570, type: 2}
   activeRagDoll: {fileID: 7929849794253428442}
   isRagDoll: 0
@@ -1562,6 +1559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16edc920129ac0e4dbae6fecbc673f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onCollectNpc: {fileID: 11400000, guid: a5471b85f511e254fb072249c7e98978, type: 2}
 --- !u!114 &7929849794253428442
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,9 +19,11 @@ public class CarryController : MonoBehaviour
     private void Initialize(){
         Instance = this;
         _maxLimit = CarryManager.Npcs.Count;
-        if (_quantity > 0) SetNPC(true);
+        if (_quantity > 0) 
+            SetNPC(true);
 
         UpdateDisplay();
+        UpdateCamHeight();
         //SetHierarchy();
     }
     private void SetHierarchy(){
@@ -84,4 +86,13 @@ public class CarryController : MonoBehaviour
         return _quantity;
     }
 
+    public int GetAvaliableQuantity()
+    {
+        return _quantity;
+    }
+
+    public GameObject LastNpc()
+    {
+        return CarryManager.Npcs[_quantity].gameObject;
+    }
 }
